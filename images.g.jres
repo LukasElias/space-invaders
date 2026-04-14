@@ -14,6 +14,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "moon"
     },
+    "image4": {
+        "data": "hwQQABAAAAAAAAAAsMsMAAAAsAuw3csAAACwvdvd3QwAALBVvdzdywAAsFtVzd3NAAC7tVXF3c0AsFtVW7XdzQCwVdXRW9XNALBVFf9VVc0Au1X1v1RVxQC1VVVFVFXFALVV1URUVbUAC1tFRFRVuwAAsPtMVNULAAAAALC0uwAAAAAAAAsAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "enemy"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
