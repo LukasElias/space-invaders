@@ -19,6 +19,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "enemy"
     },
+    "image5": {
+        "data": "hwQgACAAAAAAAAAAAO7/AID4//8PAAAAAAAAAO67y+94h75rxg8AAAAAAO5mZrb7dmf/vmb8AAAAAOBrtmZmuy9i+P9t9gAAAAC+tru7ZrbsYob/3WsPAADAu7tEtGtm+yJ2/t+0DwAAvERbS0S0Zvsidu7fvfsAAExEtERERGbGInf/T037AMBERERERERrtixn/+9N6wDARERERLRLZLYsh+//TbsPwERLRERbS7S2LPbu/k20D0y0tUREu0S0tiyG7/5NtA9MtEtERERERLssZu/+TbQPTERERERERES7LHbn/020D0xEREREREREuyx35/9NtA9MRERERERERLQsd+buTUQPRkREu0RERES0LHfm701EDEa7RFtLREREtCx35u9NRAxGW0u0RERERLQsd+juTUQMRrRERERERES0LGfo7k1EDEZEREREtEtEtCxm7v5NRAxgRERLRLS1RLQsZu/+TUQOYES0tUREu0S0LHb//k1EDmBEREtEREREtCx37v9N5AAARkRERERERMQiZ+5PTeQAAEZEtEtERET0Ivfu3kvkAACwRLS1REREy3L37t5EDgAAAEtEu0RERCxi/++9RA4AAABgRERERLQsZv++S+QAAAAAAOZERLT7dob/u2TuAAAAAAAA7rvL73hnvmbmDgAAAAAAAADu/wCI+P/vDgAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "boss"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",

@@ -14,33 +14,50 @@ player.setPosition(
 
 // Spawn enemies
 
-class Enemy {
-    x: number
-    y: number
+class EnemyType {
     image: Image
     damage: number
     
     constructor(
-        x: number,
-        y: number,
         image: Image,
         damage: number
     ) {
-        this.x = x
-        this.y = y
         this.image = image
         this.damage = damage
     }
+}
+
+const normal_enemy = new EnemyType(assets.image`enemy`, 1)
+const boss_enemy = new EnemyType(assets.image`boss`, 5)
+
+class Enemy {
+    x: number
+    y: number
+    enemy_type: EnemyType
+
+    constructor(
+        x: number,
+        y: number,
+        enemy_type: EnemyType
+    ) {
+        this.x = x
+        this.y = y
+        this.enemy_type = enemy_type
+    }
 
     spawn() {
-        let enemy_sprite = sprites.create(this.image, SpriteKind.Enemy)
+        let enemy_sprite = sprites.create(this.enemy_type.image, SpriteKind.Enemy)
 
         enemy_sprite.setPosition(this.x, this.y)
-        
-        sprites.setDataNumber(enemy_sprite, "damage", this.damage)
+
+        sprites.setDataNumber(enemy_sprite, "damage", this.enemy_type.damage)
     }
 }
 
-let enemy = new Enemy(50, 50, assets.image`enemy`, 1)
+function spawn_enemies(enemies: Enemy[]) {
+    for (let i = 0; i < enemies.length; i++) {
+        let enemy = enemies[i]
 
-enemy.spawn()
+        enemy.spawn()
+    }
+}
