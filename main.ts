@@ -61,3 +61,20 @@ function spawn_enemies(enemies: Enemy[]) {
         enemy.spawn()
     }
 }
+
+function cross_formation(x: number, y: number): Enemy[] {
+    // Boss is at x, y
+    let formation: Enemy[] = [
+        new Enemy(x     , y     , boss_enemy),
+        new Enemy(x + 24, y + 24, normal_enemy),
+        new Enemy(x + 24, y - 24, normal_enemy),
+        new Enemy(x - 24, y + 24, normal_enemy),
+        new Enemy(x - 24, y - 24, normal_enemy),
+    ]
+
+    return formation
+}
+
+let formation = cross_formation(scene.screenWidth() / 2, 0)
+
+spawn_enemies(formation)
