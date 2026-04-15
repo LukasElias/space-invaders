@@ -14,36 +14,33 @@ player.setPosition(
 
 // Spawn enemies
 
-const ENEMY_SIZE = 16;
-
-class EnemyGroup {
+class Enemy {
     x: number
     y: number
-    width: number
-    height: number
-
-    constructor(x: number, y: number, width: number, height: number) {
+    image: Image
+    damage: number
+    
+    constructor(
+        x: number,
+        y: number,
+        image: Image,
+        damage: number
+    ) {
         this.x = x
         this.y = y
-        this.width = width
-        this.height = height
+        this.image = image
+        this.damage = damage
     }
 
-    spawn_enemies() {
-        for (let enemy_x = 0; enemy_x < this.width; enemy_x++) {
-            let pos_x = this.x + enemy_x * ENEMY_SIZE
+    spawn() {
+        let enemy_sprite = sprites.create(this.image, SpriteKind.Enemy)
 
-            for (let enemy_y = 0; enemy_y < this.height; enemy_y++) {
-                let pos_y = this.y + enemy_y * ENEMY_SIZE
-
-                let enemy = sprites.create(assets.image`enemy`, SpriteKind.Enemy)
-
-                enemy.setPosition(pos_x, pos_y)
-            }
-        }
+        enemy_sprite.setPosition(this.x, this.y)
+        
+        sprites.setDataNumber(enemy_sprite, "damage", this.damage)
     }
 }
 
-let enemy_group = new EnemyGroup(0, 40, 10, 4)
+let enemy = new Enemy(50, 50, assets.image`enemy`, 1)
 
-enemy_group.spawn_enemies()
+enemy.spawn()
