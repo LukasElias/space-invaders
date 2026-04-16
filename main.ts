@@ -92,3 +92,14 @@ function enemy_step() {
 }
 
 game.onUpdateInterval(500, enemy_step)
+
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, (
+    enemy_sprite,
+    player_sprite
+) => {
+    let damage = sprites.readDataNumber(enemy_sprite, "damage")
+    
+    enemy_sprite.destroy()
+    
+    info.changeLifeBy(-damage)
+})
