@@ -78,3 +78,17 @@ function cross_formation(x: number, y: number): Enemy[] {
 let formation = cross_formation(scene.screenWidth() / 2, 0)
 
 spawn_enemies(formation)
+
+// Enemy logic
+
+function enemy_step() {
+    let enemies = sprites.allOfKind(SpriteKind.Enemy)
+
+    for (let i = 0; i < enemies.length; i++) {
+        let enemy = enemies[i]
+
+        enemy.y += 1
+    }
+}
+
+game.onUpdateInterval(500, enemy_step)
