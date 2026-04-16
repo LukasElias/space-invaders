@@ -18,18 +18,21 @@ player.setPosition(
 class EnemyType {
     image: Image
     damage: number
+    health: number
     
     constructor(
         image: Image,
-        damage: number
+        damage: number,
+        health: number
     ) {
         this.image = image
         this.damage = damage
+        this.health = health
     }
 }
 
-const normal_enemy = new EnemyType(assets.image`enemy`, 1)
-const boss_enemy = new EnemyType(assets.image`boss`, 5)
+const normal_enemy = new EnemyType(assets.image`enemy`, 1, 1)
+const boss_enemy = new EnemyType(assets.image`boss`, 5, 10)
 
 class Enemy {
     x: number
@@ -52,6 +55,9 @@ class Enemy {
         enemy_sprite.setPosition(this.x, this.y)
 
         sprites.setDataNumber(enemy_sprite, "damage", this.enemy_type.damage)
+
+        sprites.setDataNumber(enemy_sprite, "max_health", this.enemy_type.health)
+        sprites.setDataNumber(enemy_sprite, "health", this.enemy_type.health)
     }
 }
 
@@ -99,9 +105,9 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, (
     player_sprite
 ) => {
     let damage = sprites.readDataNumber(enemy_sprite, "damage")
-    
+
     enemy_sprite.destroy()
-    
+
     info.changeLifeBy(-damage)
 })
 
@@ -109,13 +115,15 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, (
     enemy_sprite,
     projectile
 ) => {
-    let points = sprites.readDataNumber(enemy_sprite, "damage") * 100
+    let damage = 1;
 
     projectile.destroy()
 
-    enemy_sprite.destroy()
+    sprites.changeDataNumberBy(enemy_sprite, "health", -damage)
 
-    info.changeScoreBy(points)
+    if (sprites.readDataNumber(enemy_sprite, "health") <= 0) {
+        enemy_sprite.destroy()
+    }
 })
 
 // Player logic
