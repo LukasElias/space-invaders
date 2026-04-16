@@ -1,6 +1,7 @@
 // Setup
 
 info.setLife(5)
+info.setScore(0)
 scene.setBackgroundImage(assets.image`world`)
 
 // Spawn player
@@ -102,4 +103,27 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, (
     enemy_sprite.destroy()
     
     info.changeLifeBy(-damage)
+})
+
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, (
+    enemy_sprite,
+    projectile
+) => {
+    let points = sprites.readDataNumber(enemy_sprite, "damage") * 100
+
+    projectile.destroy()
+
+    enemy_sprite.destroy()
+
+    info.changeScoreBy(points)
+})
+
+// Player logic
+
+controller.moveSprite(player, 100, 0)
+
+player.setStayInScreen(true)
+
+controller.A.onEvent(ControllerButtonEvent.Pressed, () => {
+    let attack = sprites.createProjectileFromSprite(assets.image`attack`, player, 0, -100)
 })
