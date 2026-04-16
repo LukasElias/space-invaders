@@ -31,7 +31,7 @@ class EnemyType {
     }
 }
 
-const normal_enemy = new EnemyType(assets.image`enemy`, 1, 1)
+const normal_enemy= new EnemyType(assets.image`enemy`, 1, 1)
 const boss_enemy = new EnemyType(assets.image`boss`, 5, 10)
 
 class Enemy {
@@ -56,8 +56,14 @@ class Enemy {
 
         sprites.setDataNumber(enemy_sprite, "damage", this.enemy_type.damage)
 
-        sprites.setDataNumber(enemy_sprite, "max_health", this.enemy_type.health)
-        sprites.setDataNumber(enemy_sprite, "health", this.enemy_type.health)
+        let health_bar = statusbars.create(10, 2, StatusBarKind.EnemyHealth)
+        
+        health_bar.attachToSprite(enemy_sprite)
+
+        health_bar.max = this.enemy_type.health
+        health_bar.value = this.enemy_type.health
+
+        health_bar.setFlag(SpriteFlag.Invisible, true)
     }
 }
 
@@ -119,11 +125,18 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, (
 
     projectile.destroy()
 
-    sprites.changeDataNumberBy(enemy_sprite, "health", -damage)
+    let status_bar = statusbars.getStatusBarAttachedTo(StatusBarKind.EnemyHealth, enemy_sprite)
 
-    if (sprites.readDataNumber(enemy_sprite, "health") <= 0) {
-        enemy_sprite.destroy()
-    }
+    status_bar.value -= damage
+
+    status_bar.setFlag(SpriteFlag.Invisible, false)
+})
+
+statusbars.onZero(StatusBarKind.EnemyHealth, (status_bar) => {
+    let enemy_sprite = status_bar.spriteAttachedTo()
+
+    enemy_sprite.destroy()
+    status_bar.destroy()
 })
 
 // Player logic
