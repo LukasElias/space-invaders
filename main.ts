@@ -147,6 +147,11 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, () => {
 game.onUpdate(() => {
     let enemies = sprites.allOfKind(SpriteKind.Enemy)
 
+    if (enemies.length === 0) {
+        let formation = cross_formation(Math.randomRange(40, scene.screenWidth() - 40), 0)
+        spawn_enemies(formation)
+    }
+
     for (let i = 0; i < enemies.length; i++) {
         let enemy = enemies[i]
 
