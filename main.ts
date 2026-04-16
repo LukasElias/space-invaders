@@ -19,7 +19,7 @@ class EnemyType {
     image: Image
     damage: number
     health: number
-    
+
     constructor(
         image: Image,
         damage: number,
@@ -64,6 +64,8 @@ class Enemy {
         health_bar.value = this.enemy_type.health
 
         health_bar.setFlag(SpriteFlag.Invisible, true)
+
+        enemy_sprite.vy = 4
     }
 }
 
@@ -94,27 +96,16 @@ spawn_enemies(formation)
 
 // Enemy logic
 
-function enemy_step() {
-    let enemies = sprites.allOfKind(SpriteKind.Enemy)
-
-    for (let i = 0; i < enemies.length; i++) {
-        let enemy = enemies[i]
-
-        enemy.y += 1
-    }
-}
-
-game.onUpdateInterval(500, enemy_step)
-
-sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, (
-    enemy_sprite,
-    player_sprite
-) => {
+function enemy_suicide(enemy_sprite: Sprite) {
     let damage = sprites.readDataNumber(enemy_sprite, "damage")
 
     enemy_sprite.destroy()
 
     info.changeLifeBy(-damage)
+}
+
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, (enemy_sprite, player_sprite) => {
+    enemy_suicide(enemy_sprite)
 })
 
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, (
@@ -135,6 +126,8 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, (
 statusbars.onZero(StatusBarKind.EnemyHealth, (status_bar) => {
     let enemy_sprite = status_bar.spriteAttachedTo()
 
+    info.changeScoreBy(sprites.readDataNumber(enemy_sprite, "damage") * 100)
+
     enemy_sprite.destroy()
     status_bar.destroy()
 })
@@ -147,4 +140,18 @@ player.setStayInScreen(true)
 
 controller.A.onEvent(ControllerButtonEvent.Pressed, () => {
     let attack = sprites.createProjectileFromSprite(assets.image`attack`, player, 0, -100)
+})
+
+// Game Loop
+
+game.onUpdate(() => {
+    let enemies = sprites.allOfKind(SpriteKind.Enemy)
+
+    for (let i = 0; i < enemies.length; i++) {
+        let enemy = enemies[i]
+
+        if (enemy.y > scene.screenHeight()) {
+            enemy_suicide(enemy)
+        }
+    }
 })
