@@ -31,7 +31,7 @@ class EnemyType {
     }
 }
 
-const normal_enemy= new EnemyType(assets.image`enemy`, 1, 1)
+const normal_enemy = new EnemyType(assets.image`enemy`, 1, 1)
 const boss_enemy = new EnemyType(assets.image`boss`, 5, 10)
 
 class Enemy {
